@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb55dd4d-78a7-4b8f-8eff-07130753ae8a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,28 +98,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>46</line>
+          <line>40</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>78</line>
+          <line>72</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
-          <line>53</line>
+          <line>39</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>165</line>
-          <option name="timeStamp" value="47" />
+          <line>161</line>
+          <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>130</line>
-          <option name="timeStamp" value="48" />
+          <line>127</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

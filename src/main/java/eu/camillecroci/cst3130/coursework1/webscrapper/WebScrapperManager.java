@@ -7,7 +7,10 @@ public class WebScrapperManager {
     }
 
     private void scrape(){
-//        WebScrapperVueCinema ws = new WebScrapperVueCinema(true);
-        WebScrapperCineworld cw = new WebScrapperCineworld(true);
+        WebScrapperVueCinema ws = new WebScrapperVueCinema();
+        ws.init();
+        ws.run();
+//        WebScrapperCineworld cw = new WebScrapperCineworld();
+
     }
 }

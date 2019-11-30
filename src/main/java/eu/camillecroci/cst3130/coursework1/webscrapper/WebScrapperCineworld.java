@@ -17,17 +17,8 @@ public class WebScrapperCineworld extends WebScrapper {
 
     private String CINEWORLD_URL_BASE = "https://www.cineworld.co.uk/#/buy-tickets-by-cinema?in-cinema=";
     private String PREORDER = "PRE-ORDER YOUR TICKETS NOW";
-    
+
     public WebScrapperCineworld(){}
-
-    public WebScrapperCineworld(boolean scrape){
-        try {
-            scrapeMovies();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public String getCinemaUrl(String cinemaName){
         CinemaDAO cinemaDAO = new CinemaDAO();
@@ -41,8 +32,6 @@ public class WebScrapperCineworld extends WebScrapper {
 
         return cinemaUrl;
     }
-
-
 
     private void loadAllImages(List<WebElement> moviesList, WebDriver driver, JavascriptExecutor js){
         WebElement top = driver.findElement(By.className("main-menu"));
@@ -79,13 +68,24 @@ public class WebScrapperCineworld extends WebScrapper {
         return parsedTime;
     }
 
-
-    public void scrapeMovies() throws IOException {
+    public void run(){
         CinemaDAO cinemaDAO = new CinemaDAO();
         cinemaDAO.init();
-        List<Cinema> allVueCinema = cinemaDAO.getCinemasByCompanyName("CineWorld");
+        List<Cinema> allCinewold = cinemaDAO.getCinemasByCompanyName("CineWorld");
 
-        String cineworldUrl  = getCinemaUrl( "Enfield");
+        for(Cinema cinema : allCinewold){
+            try {
+                scrapeMovies(cinema.getCinemaNameUrl());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void scrapeMovies(String location) throws IOException {
+
+        String cineworldUrl  = getCinemaUrl( location);
 
         ChromeOptions options  = new ChromeOptions();
         options.setHeadless(true);
