@@ -1,0 +1,54 @@
+  // Example for Spring
+
+//        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+//        Screening screening = (Screening) context.getBean("screening1");
+//
+//        int id = screening.getId();
+//        Date screeningDate = screening.getScreeningDate();
+//        Date startScreening = screening.getStartScreening();
+//        Date endScreening = screening.getEndScreening();
+//        Movie movie = screening.getMovie();
+//        Cinema cinema = screening.getCinema();
+//
+//        System.out.println("We got the bean screening:  " + id
+//                + " with the screening date: " + screeningDate
+//                + " start screening: " + startScreening
+//                + " end screening: " + endScreening
+//                + " for the movie: " + movie
+//                + " at the cinema: " + cinema
+//        + ".");
+
+
+        // Example for hibernate
+
+//        CinemaService cinemaService = new CinemaService();
+//        cinemaService.init();
+
+//        cinemaService.addCinema("myCinema76", "39 rue detonpere", "0908997796", "CineWorld");
+//        cinemaService.updateCinemaName(1, "myCinema90");
+//        cinemaService.searchCinemaByName("myCinema90");
+//        cinemaService.deleteCinemaSimple(4);
+//        cinemaService.deleteCinemaSafe(2);
+
+//        int cinemaid = cinemaService.searchCinemaIdByName("myCinema76");
+//        Cinema cinema = cinemaService.getCinemaById(cinemaid);
+//
+//
+//        MovieService movieService = new MovieService();
+//        movieService.init();
+
+//        movieService.addMovie("The big movie", "a very big movie", "2d", "www.movie.img");
+
+//        int movieId = movieService.searchMovieIdByName("The big movie");
+//        Movie movie = movieService.getMovieById(movieId);
+//
+//        ScreeningService ss = new ScreeningService();
+//        ss.init();
+//        ss.addScreening(new Date("10/11/2019"), new Date("01/11/2019"), new Date("10/12/2019"), movie , cinema);
+//
+//        cinemaService.shutDown();
+//        movieService.shutDown();
+//        ss.shutDown();
+
+
+        //Web Scrapping;

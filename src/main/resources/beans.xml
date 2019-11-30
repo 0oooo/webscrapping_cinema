@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id = "cinema1" class="eu.camillecroci.cst3130.coursework1.Cinema">
+        <property name ="id" value="1"></property>
+        <property name ="name" value="The good place"></property>
+        <property name ="address" value="1 cheztamere road"></property>
+        <property name ="phone" value="0836757575"></property>
+        <property name ="companyName" value="Vue"></property>
+        <property name ="cinemaNameUrl" value="acton"></property>
+    </bean>
+
+    <bean id = "movie1" class="eu.camillecroci.cst3130.coursework1.Movie">
+        <property name ="id" value="1"></property>
+        <property name ="name" value="The super cool movie"></property>
+        <property name ="description" value="A really cool movie with cool people doing cool stuffs, but nothing illegal"></property>
+        <property name ="details" value="3D"></property>
+        <property name ="url" value="www.coolmovie.com/movie1.jpg"></property>
+    </bean>
+
+    <bean id = "screening1" class="eu.camillecroci.cst3130.coursework1.Screening">
+        <property name ="id" value="1"></property>
+        <property name ="screeningDate" value="10/10/2020"></property>
+        <property name ="startScreening" value="01/10/2020"></property>
+        <property name ="endScreening" value="01/11/2020"></property>
+        <property name ="movie" ref="movie1"></property>
+        <property name="cinema" ref="cinema1"></property>
+    </bean>
+
+    <bean id = "ticket1" class="eu.camillecroci.cst3130.coursework1.Ticket">
+        <property name ="id" value="1"></property>
+        <property name ="description" value="The evening ticket"></property>
+        <property name ="price" value="12.45"></property>
+        <property name ="day" value="monday"></property>
+        <property name ="startHour" value="08"></property>
+        <property name ="startMin" value="08"></property>
+        <property name ="endHour" value="18"></property>
+        <property name ="endMin" value="15"></property>
+        <property name ="cinema" ref="cinema1"></property>
+    </bean>
+
+</beans>

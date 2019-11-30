@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="eu.camillecroci.cst3130.coursework1.Cinema" table="cinema">
+
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment"/>
+        </id>
+
+        <property name="name" type="string">
+            <column name="cinema_name" />
+        </property>
+
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+
+        <property name="phoneNumber" type="string">
+            <column name="phone" />
+        </property>
+
+        <property name="companyName" type="string">
+            <column name="company_name" />
+        </property>
+
+    </class>
+</hibernate-mapping>
