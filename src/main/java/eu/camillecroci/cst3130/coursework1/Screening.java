@@ -1,7 +1,8 @@
 package eu.camillecroci.cst3130.coursework1;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 @Entity
 @Table(name="screening")
@@ -14,12 +15,6 @@ public class Screening {
 
     @Column(name="screening_datetime")
     private Date screeningDate;
-
-    @Column(name="start_screening_date")
-    private Date startScreening;
-
-    @Column(name="end_screening_date")
-    private Date endScreening;
 
     @Column(name="url")
     private String url;
@@ -48,22 +43,6 @@ public class Screening {
 
     public void setScreeningDate(Date screeningDate) {
         this.screeningDate = screeningDate;
-    }
-
-    public Date getStartScreening() {
-        return startScreening;
-    }
-
-    public void setStartScreening(Date startScreening) {
-        this.startScreening = startScreening;
-    }
-
-    public Date getEndScreening() {
-        return endScreening;
-    }
-
-    public void setEndScreening(Date endScreening) {
-        this.endScreening = endScreening;
     }
 
     public String getUrl() {

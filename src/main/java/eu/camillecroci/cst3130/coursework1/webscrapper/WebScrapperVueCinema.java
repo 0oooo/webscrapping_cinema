@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,6 +114,7 @@ public class WebScrapperVueCinema extends WebScrapper {
     }
 
     public void run() {
+        super.init();
         CinemaDAO cinemaDAO = new CinemaDAO();
         cinemaDAO.init();
         List<Cinema> allVueCinema = cinemaDAO.getCinemasByCompanyName("Vue");
@@ -136,6 +139,8 @@ public class WebScrapperVueCinema extends WebScrapper {
 
         WebDriver driver = new ChromeDriver(options);
 
+        WebDriverWait wait = new WebDriverWait(driver, 1);
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         driver.get(vueUrl);
@@ -143,12 +148,7 @@ public class WebScrapperVueCinema extends WebScrapper {
         System.out.println("++++++++++++++ URL =  " + vueUrl + " +++++++++++++++++++");
 
         //Wait for page to load
-        try {
-            Thread.sleep(5000);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("whats-on-filters")));
 
         String page  = driver.getPageSource();
 
@@ -158,6 +158,11 @@ public class WebScrapperVueCinema extends WebScrapper {
 
         //Output details for individual products
         List<WebElement> moviesList = driver.findElements(By.className("filmlist__item"));
+
+        //no movie found (maybe it's late at night?)
+        if(moviesList.size() < 1){
+            return;
+        }
 
         // We are waiting to have the image of the last movie to be loaded to scrap
         this.loadAllImages(moviesList, driver, js, top);
@@ -211,6 +216,16 @@ public class WebScrapperVueCinema extends WebScrapper {
 
         //Exit driver and close Chrome
         driver.quit();
+    }
+
+    private void test(){
+        ArrayList<String> titles = super.titles;
+        ArrayList<String> descriptions = super.descriptions;
+        ArrayList<String> imgUrls = super.imgUrls;
+        ArrayList<ArrayList<String>> allDetails = super.allDetails;
+        ArrayList<ArrayList<Integer>> allHours = super.allHours;
+        ArrayList<ArrayList<Integer>> allMinutes = super.allMinutes;
+        ArrayList<ArrayList<String>> bookingUrls = super.bookingUrls;
     }
 
 }

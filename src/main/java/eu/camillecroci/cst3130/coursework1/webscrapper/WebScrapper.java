@@ -6,12 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class WebScrapper extends Thread {
 
-    private String VUE = "Vue";
-    private String CINEWORLD = "Cineworld";
-
+//    protected Date firstDay;
+//    protected Date[] screeningDates;
     protected ArrayList<String> titles;
     protected ArrayList<String> dates;
     protected ArrayList<String> descriptions;
@@ -24,6 +24,9 @@ public class WebScrapper extends Thread {
     public WebScrapper(){}
 
     public void init(){
+//        firstDay = new Date();
+//        screeningDates = new Date[7];
+//        this.generateDateList(firstDay);
         titles = new ArrayList<>();
         dates = new ArrayList<>();
         descriptions = new ArrayList<>();
@@ -33,6 +36,15 @@ public class WebScrapper extends Thread {
         allMinutes = new ArrayList<ArrayList<Integer>>();
         bookingUrls = new ArrayList<ArrayList<String>>();
     }
+
+//    protected void generateDateList(Date firstDate){
+//        screeningDates[0] = firstDate;
+//        Date oldDate = firstDate;
+//        for (int day = 1; day < screeningDates.length; day++){
+//            Date newDate = oldDate
+//            screeningDates[day] = newDate;
+//        }
+//    }
 
     protected void scrollToElement(WebDriver driver, JavascriptExecutor js, WebElement top, WebElement element){
         WebElement footer = driver.findElements(By.className("footer")).get(0);
@@ -51,6 +63,21 @@ public class WebScrapper extends Thread {
         js.executeScript("arguments[0].scrollIntoView();", element);
     }
 
+//    public Date getFirstDay() {
+//        return firstDay;
+//    }
+//
+//    public void setFirstDay(Date firstDay) {
+//        this.firstDay = firstDay;
+//    }
+//
+//    public Date[] getScreeningDates() {
+//        return screeningDates;
+//    }
+//
+//    public void setScreeningDates(Date[] screeningDates) {
+//        this.screeningDates = screeningDates;
+//    }
 
     public ArrayList<String> getTitles() {
         return titles;
@@ -115,4 +142,8 @@ public class WebScrapper extends Thread {
     public void setBookingUrls(ArrayList<ArrayList<String>> bookingUrls) {
         this.bookingUrls = bookingUrls;
     }
+
+    //to be overridden
+    public void run(){}
+
 }

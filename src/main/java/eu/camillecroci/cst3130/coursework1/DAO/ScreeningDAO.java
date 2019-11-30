@@ -9,7 +9,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ScreeningDAO {
 
@@ -39,15 +39,13 @@ public class ScreeningDAO {
         }
     }
 
-    public void addScreening(Date screeningDate, Date startScreening, Date endScreening, Movie movie, Cinema cinema) {
+    public void addScreening(Date screeningDate, Movie movie, Cinema cinema) {
 
         Session session = sessionFactory.getCurrentSession();
 
         Screening screening = new Screening();
 
         screening.setScreeningDate(screeningDate);
-        screening.setStartScreening(startScreening);
-        screening.setEndScreening(endScreening);
         screening.setMovie(movie);
         screening.setCinema(cinema);
 

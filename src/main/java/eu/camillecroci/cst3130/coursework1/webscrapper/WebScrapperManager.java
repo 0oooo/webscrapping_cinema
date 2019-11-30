@@ -7,10 +7,11 @@ public class WebScrapperManager {
     }
 
     private void scrape(){
-        WebScrapperVueCinema ws = new WebScrapperVueCinema();
-        ws.init();
-        ws.run();
-//        WebScrapperCineworld cw = new WebScrapperCineworld();
-
+//        WebScrapperVueCinema vue = new WebScrapperVueCinema();
+//        vue.start();
+        WebScrapperCineworld cw = new WebScrapperCineworld();
+//        cw.start();
+        cw.run();
+        cw.test();
     }
 }
