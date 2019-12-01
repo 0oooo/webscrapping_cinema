@@ -3,47 +3,15 @@ package eu.camillecroci.cst3130.coursework1.DAO;
 import eu.camillecroci.cst3130.coursework1.Cinema;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CinemaDAO {
-
-    private SessionFactory sessionFactory;
-
-    public CinemaDAO() {
-    }
-
-    public void init() {
-        try {
-            StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
-
-            standardServiceRegistryBuilder.configure("hibernate.cfg.xml");
-
-            StandardServiceRegistry registry = standardServiceRegistryBuilder.build();
-
-            try {
-                sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-            } catch (Exception e) {
-                System.err.println("Session Factory build failed");
-                e.printStackTrace();
-                StandardServiceRegistryBuilder.destroy(registry);
-            }
-            System.out.println("Session factory build");
-        } catch (Exception ex) {
-            System.err.println("SessionFactory creation failed." + ex);
-
-        }
-    }
+public class CinemaDAO extends AbstractDAO {
 
     public void addCinema(String name, String address, String phoneNumber, String companyname) {
-
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
 
         Cinema cinema = new Cinema();
 
@@ -58,13 +26,14 @@ public class CinemaDAO {
 
         session.getTransaction().commit();
 
-        session.close();
         System.out.println("Cinema added to database with ID" + cinema.getId());
+
+        session.close();
     }
 
     public void updateCinemaName(int id, String name) {
+        Session session = super.getCurrentSession();
 
-        Session session = sessionFactory.getCurrentSession();
         try {
             session.beginTransaction();
 
@@ -86,7 +55,8 @@ public class CinemaDAO {
     }
 
     public int searchCinemaIdByName(String name) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
+
         Cinema cinema = new Cinema();
 
         try {
@@ -106,7 +76,7 @@ public class CinemaDAO {
     }
 
     public Cinema searchCinemaByName(String name) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
         Cinema cinema = new Cinema();
         try {
             session.beginTransaction();
@@ -121,7 +91,7 @@ public class CinemaDAO {
     }
 
     public int getCinemaNumber(){
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
         int totalNumOfCinemas = 0;
         try {
             session.beginTransaction();
@@ -137,7 +107,7 @@ public class CinemaDAO {
     }
 
     public List<Cinema> getCinemasByCompanyName(String company){
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
         List<Cinema> allCinemas = new ArrayList<Cinema>();
         try {
             session.beginTransaction();
@@ -152,7 +122,7 @@ public class CinemaDAO {
     }
 
     public void deleteCinemaSimple(int id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
 
         try {
             session.beginTransaction();
@@ -165,13 +135,12 @@ public class CinemaDAO {
         } catch (HibernateException e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
+        session.close();
     }
 
     public Cinema getCinemaById(int id){
-        Session session = sessionFactory.getCurrentSession();
+        Session session = super.getCurrentSession();
         Cinema cinema = new Cinema();
         try {
             session.beginTransaction();
@@ -190,8 +159,7 @@ public class CinemaDAO {
     }
 
     public void deleteCinemaSafe(int id) {
-        Session session = sessionFactory.getCurrentSession();
-
+        Session session = super.getCurrentSession();
         try {
             session.beginTransaction();
 
@@ -206,14 +174,8 @@ public class CinemaDAO {
         } catch (HibernateException e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
-
+        session.close();
     }
 
-
-    public void shutDown() {
-        sessionFactory.close();
-    }
 }

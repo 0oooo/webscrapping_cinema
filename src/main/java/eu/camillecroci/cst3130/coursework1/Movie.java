@@ -17,9 +17,6 @@ public class Movie {
     @Column(name="description")
     private String description;
 
-    @Column(name="details")
-    private String details;
-
     @Column(name="image_url")
     private String url;
 
@@ -47,14 +44,6 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
     }
 
     public String getUrl() {

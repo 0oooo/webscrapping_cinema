@@ -19,6 +19,8 @@ public class WebScrapperCineworld extends WebScrapper {
 
     private String CINEWORLD_URL_BASE = "https://www.cineworld.co.uk/#/buy-tickets-by-cinema?in-cinema=";
     private String PREORDER = "PRE-ORDER YOUR TICKETS NOW";
+    private String JUNIOR_TITLE = "Movies For Juniors";
+    private String JUNIOR_MOVIE = "Movies for Juniors: Discounted ticket price available, for children and accompanying adults. All customers aged 16 or over must be accompanying a child. Children under 14 years of age must be accompanied by an adult.";
 
     public WebScrapperCineworld(){}
 
@@ -70,6 +72,9 @@ public class WebScrapperCineworld extends WebScrapper {
             driver.get(url);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("text-content")));
             String description = driver.findElement(By.className("text-content")).getText();
+            if(description.toLowerCase().contains(JUNIOR_MOVIE.toLowerCase())){
+                description = description.substring(description.indexOf(JUNIOR_MOVIE) + JUNIOR_MOVIE.length() + 1 );
+            }
             descriptions.add(description);
             System.out.println("Description : " + description);
         }
@@ -77,25 +82,17 @@ public class WebScrapperCineworld extends WebScrapper {
 
     public void run(){
         super.init();
-        CinemaDAO cinemaDAO = new CinemaDAO();
-        cinemaDAO.init();
         List<Cinema> allCinewold = cinemaDAO.getCinemasByCompanyName("CineWorld");
 
         for(Cinema cinema : allCinewold){
-            try {
-                scrapeMovies(cinema.getCinemaNameUrl());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(cinema.isActive()) {
+                try {
+                    scrapeMovies(cinema.getCinemaNameUrl());
+                    super.saveMovieInDatabase();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-    }
-
-    //debug method if there is a problem with one cinema in particular
-    public void runForOne(String cinema){
-        try{
-            scrapeMovies(cinema);
-        } catch (IOException e){
-            e.printStackTrace();
         }
     }
 
@@ -157,8 +154,12 @@ public class WebScrapperCineworld extends WebScrapper {
             descriptionUrls.add(descriptionUrl);
 
             // Title of the movie
-            WebElement title = movie.findElement(By.className("qb-movie-name"));
-            titles.add(title.getText());
+            String title = movie.findElement(By.className("qb-movie-name")).getText();
+
+            if(title.toLowerCase().contains(JUNIOR_TITLE.toLowerCase())){
+                title = title.substring(0,title.indexOf(JUNIOR_TITLE));
+            }
+            titles.add(title);
 
             // URL of the image of the movie
             WebElement imageUrl = movie.findElement(By.className("v-lazy-loaded"));
@@ -182,7 +183,7 @@ public class WebScrapperCineworld extends WebScrapper {
             allMinutes.add(minutes);
             bookingUrls.add(screeningUrls);
 
-            System.out.println("Title: " + title.getText());
+            System.out.println("Title: " + title);
             System.out.println("Image Url: " + imageUrl.getAttribute("src"));
             for(int i = 0; i < hours.size(); i++){
                 System.out.println("Dets: " + hours.get(i) + ":" + minutes.get(i));

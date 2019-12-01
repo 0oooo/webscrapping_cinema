@@ -2,7 +2,7 @@ package eu.camillecroci.cst3130.coursework1;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name="screening")
@@ -18,6 +18,9 @@ public class Screening {
 
     @Column(name="url")
     private String url;
+
+    @Column(name="details")
+    private String details;
 
     @ManyToOne(targetEntity=Movie.class)
     @JoinColumn(name="movie_id",referencedColumnName="id")
@@ -51,6 +54,14 @@ public class Screening {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public Movie getMovie() {

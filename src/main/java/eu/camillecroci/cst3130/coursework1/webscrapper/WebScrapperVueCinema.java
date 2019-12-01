@@ -2,6 +2,7 @@ package eu.camillecroci.cst3130.coursework1.webscrapper;
 
 import eu.camillecroci.cst3130.coursework1.Cinema;
 import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
+import eu.camillecroci.cst3130.coursework1.DAO.MovieDAO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,15 +118,17 @@ public class WebScrapperVueCinema extends WebScrapper {
 
     public void run() {
         super.init();
-        CinemaDAO cinemaDAO = new CinemaDAO();
-        cinemaDAO.init();
         List<Cinema> allVueCinema = cinemaDAO.getCinemasByCompanyName("Vue");
 
         for (Cinema cinema : allVueCinema) {
-            try {
-                scrapeMovies(cinema.getCinemaNameUrl());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(cinema.isActive()) {
+                try {
+                    scrapeMovies(cinema.getCinemaNameUrl());
+                    super.saveMovieInDatabase();
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
             }
         }
     }
@@ -216,6 +221,14 @@ public class WebScrapperVueCinema extends WebScrapper {
 
         //Exit driver and close Chrome
         driver.quit();
+    }
+
+    private void saveInDatabase(){
+
+    }
+
+    private void saveMovieInDatabase(String name, String detail, String description, String imgUrl){
+
     }
 
     private void test(){

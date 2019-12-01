@@ -24,7 +24,7 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!-- Mapping files -->
-        <mapping class="eu.camillecroci.cst3130.coursework1.Cinema" />
+        <mapping class="eu.camillecroci.cst3130.coursework1.Cinema"/>
         <mapping class="eu.camillecroci.cst3130.coursework1.Movie" />
         <mapping class="eu.camillecroci.cst3130.coursework1.Screening" />
         <mapping class="eu.camillecroci.cst3130.coursework1.Ticket" />

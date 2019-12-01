@@ -18,17 +18,16 @@
         <property name ="id" value="1"></property>
         <property name ="name" value="The super cool movie"></property>
         <property name ="description" value="A really cool movie with cool people doing cool stuffs, but nothing illegal"></property>
-        <property name ="details" value="3D"></property>
         <property name ="url" value="www.coolmovie.com/movie1.jpg"></property>
     </bean>
 
     <bean id = "screening1" class="eu.camillecroci.cst3130.coursework1.Screening">
         <property name ="id" value="1"></property>
         <property name ="screeningDate" value="10/10/2020"></property>
-        <property name ="startScreening" value="01/10/2020"></property>
-        <property name ="endScreening" value="01/11/2020"></property>
         <property name ="movie" ref="movie1"></property>
         <property name="cinema" ref="cinema1"></property>
+        <property name ="details" value="3D"></property>
+        <property name="url" value="www.url.com"></property>
     </bean>
 
     <bean id = "ticket1" class="eu.camillecroci.cst3130.coursework1.Ticket">
@@ -43,4 +42,32 @@
         <property name ="cinema" ref="cinema1"></property>
     </bean>
 
+    <bean id="myMovieDAO" class="eu.camillecroci.cst3130.coursework1.DAO.MovieDAO">
+        <property name="sessionFactoryManager" ref="sessionFactoryManager"></property>
+    </bean>
+
+    <bean id="myCinemaDAO" class="eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO">
+        <property name="sessionFactoryManager" ref="sessionFactoryManager"></property>
+    </bean>
+
+    <bean id="myScreeningDAO" class="eu.camillecroci.cst3130.coursework1.DAO.ScreeningDAO">
+        <property name="sessionFactoryManager" ref="sessionFactoryManager"></property>
+    </bean>
+
+    <bean id="myTicketDAO" class="eu.camillecroci.cst3130.coursework1.DAO.TicketDAO">
+        <property name="sessionFactoryManager" ref="sessionFactoryManager"></property>
+    </bean>
+
+    <bean id="myWebscrapperManager" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperManager"></bean>
+
+
+    <bean id="myWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapper">
+    </bean>
+
+    <bean id="myVueWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperVueCinema"></bean>
+
+    <bean id="myCineworldWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperCineworld"></bean>
+
+    <bean id="sessionFactoryManager" class="eu.camillecroci.cst3130.coursework1.DAO.SessionFactoryManager">
+    </bean>
 </beans>

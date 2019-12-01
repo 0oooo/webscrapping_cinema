@@ -27,6 +27,8 @@ public class Cinema {
     @Column(name="cinema_url_name")
     private String cinemaNameUrl;
 
+    private boolean active;
+
     public Cinema(){}
 
     public int getId() {
@@ -75,5 +77,13 @@ public class Cinema {
 
     public void setCinemaNameUrl(String cinemaNameUrl) {
         this.cinemaNameUrl = cinemaNameUrl;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

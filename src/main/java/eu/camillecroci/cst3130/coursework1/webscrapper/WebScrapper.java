@@ -1,9 +1,14 @@
 package eu.camillecroci.cst3130.coursework1.webscrapper;
 
+import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
+import eu.camillecroci.cst3130.coursework1.DAO.MovieDAO;
+import eu.camillecroci.cst3130.coursework1.DAO.ScreeningDAO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.sql.Date;
@@ -21,6 +26,10 @@ public class WebScrapper extends Thread {
     protected ArrayList<ArrayList<Integer>> allMinutes;
     protected ArrayList<ArrayList<String>> bookingUrls;
 
+    protected CinemaDAO cinemaDAO;
+    protected MovieDAO movieDAO;
+    protected ScreeningDAO screeningDAO;
+
     public WebScrapper(){}
 
     public void init(){
@@ -35,6 +44,12 @@ public class WebScrapper extends Thread {
         allHours = new ArrayList<ArrayList<Integer>>();
         allMinutes = new ArrayList<ArrayList<Integer>>();
         bookingUrls = new ArrayList<ArrayList<String>>();
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+
+        cinemaDAO = (CinemaDAO) context.getBean("myCinemaDAO");
+        movieDAO = (MovieDAO) context.getBean("myMovieDAO");
+        screeningDAO = (ScreeningDAO) context.getBean("myScreeningDAO");
     }
 
 //    protected void generateDateList(Date firstDate){
@@ -143,7 +158,10 @@ public class WebScrapper extends Thread {
         this.bookingUrls = bookingUrls;
     }
 
-    //to be overridden
-    public void run(){}
+    protected void saveMovieInDatabase(){
+        for (int i = 0; i < titles.size(); i++){
+            movieDAO.addMovie(titles.get(i), descriptions.get(i), imgUrls.get(i));
+        }
+    }
 
 }
