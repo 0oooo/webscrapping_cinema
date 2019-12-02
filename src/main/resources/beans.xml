@@ -14,17 +14,17 @@
         <property name ="cinemaNameUrl" value="acton"></property>
     </bean>
 
-    <bean id = "movie1" class="eu.camillecroci.cst3130.coursework1.Movie">
-        <property name ="id" value="1"></property>
-        <property name ="name" value="The super cool movie"></property>
-        <property name ="description" value="A really cool movie with cool people doing cool stuffs, but nothing illegal"></property>
-        <property name ="url" value="www.coolmovie.com/movie1.jpg"></property>
+    <bean id = "defaultMovie" class="eu.camillecroci.cst3130.coursework1.Movie">
+        <property name ="id" value="0"></property>
+        <property name ="name" value="DefaultDefault"></property>
+        <property name ="description" value="Default"></property>
+        <property name ="url" value="www.default.com"></property>
     </bean>
 
     <bean id = "screening1" class="eu.camillecroci.cst3130.coursework1.Screening">
         <property name ="id" value="1"></property>
         <property name ="screeningDate" value="10/10/2020"></property>
-        <property name ="movie" ref="movie1"></property>
+        <property name ="movie" ref="defaultMovie"></property>
         <property name="cinema" ref="cinema1"></property>
         <property name ="details" value="3D"></property>
         <property name="url" value="www.url.com"></property>
@@ -68,6 +68,5 @@
 
     <bean id="myCineworldWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperCineworld"></bean>
 
-    <bean id="sessionFactoryManager" class="eu.camillecroci.cst3130.coursework1.DAO.SessionFactoryManager">
-    </bean>
+    <bean id="sessionFactoryManager" class="eu.camillecroci.cst3130.coursework1.DAO.SessionFactoryManager"></bean>
 </beans>

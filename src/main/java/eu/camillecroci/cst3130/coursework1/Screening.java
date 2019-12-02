@@ -23,7 +23,7 @@ public class Screening {
     private String details;
 
     @ManyToOne(targetEntity=Movie.class)
-    @JoinColumn(name="movie_id",referencedColumnName="id")
+    @JoinColumn(name="movie_id", referencedColumnName="id")
     private Movie movie;
 
     @ManyToOne(targetEntity=Cinema.class)

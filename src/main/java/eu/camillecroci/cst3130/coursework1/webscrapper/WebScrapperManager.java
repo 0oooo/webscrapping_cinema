@@ -6,11 +6,9 @@ public class WebScrapperManager {
     }
 
     public void scrape(){
-//        WebScrapperVueCinema vue = new WebScrapperVueCinema();
-//        vue.start();
-        WebScrapperCineworld cw = new WebScrapperCineworld();
+        WebScrapperVueCinema vue = new WebScrapperVueCinema();
+        vue.start();
+//        WebScrapperCineworld cw = new WebScrapperCineworld();
 //        cw.start();
-        cw.run();
-//        cw.test();
     }
 }

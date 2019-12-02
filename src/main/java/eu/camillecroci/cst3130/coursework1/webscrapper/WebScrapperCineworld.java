@@ -75,7 +75,8 @@ public class WebScrapperCineworld extends WebScrapper {
             if(description.toLowerCase().contains(JUNIOR_MOVIE.toLowerCase())){
                 description = description.substring(description.indexOf(JUNIOR_MOVIE) + JUNIOR_MOVIE.length() + 1 );
             }
-            descriptions.add(description);
+//            descriptions.add(description);
+            //todo find a way to add it to the good db
             System.out.println("Description : " + description);
         }
     }
@@ -88,7 +89,6 @@ public class WebScrapperCineworld extends WebScrapper {
             if(cinema.isActive()) {
                 try {
                     scrapeMovies(cinema.getCinemaNameUrl());
-                    super.saveMovieInDatabase();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -159,11 +159,9 @@ public class WebScrapperCineworld extends WebScrapper {
             if(title.toLowerCase().contains(JUNIOR_TITLE.toLowerCase())){
                 title = title.substring(0,title.indexOf(JUNIOR_TITLE));
             }
-            titles.add(title);
 
             // URL of the image of the movie
             WebElement imageUrl = movie.findElement(By.className("v-lazy-loaded"));
-            imgUrls.add(imageUrl.getAttribute("src"));
 
             // List of details
             List<WebElement>  details  = movie.findElements(By.className("qb-screening-attributes"));
@@ -179,10 +177,6 @@ public class WebScrapperCineworld extends WebScrapper {
                 screeningUrls.add(time.getAttribute("data-url"));
             }
 
-            allHours.add(hours);
-            allMinutes.add(minutes);
-            bookingUrls.add(screeningUrls);
-
             System.out.println("Title: " + title);
             System.out.println("Image Url: " + imageUrl.getAttribute("src"));
             for(int i = 0; i < hours.size(); i++){
@@ -197,13 +191,4 @@ public class WebScrapperCineworld extends WebScrapper {
         driver.quit();
     }
 
-    public void test(){
-        ArrayList<String> titles = super.titles;
-        ArrayList<String> descriptions = super.descriptions;
-        ArrayList<String> imgUrls = super.imgUrls;
-        ArrayList<ArrayList<String>> allDetails = super.allDetails;
-        ArrayList<ArrayList<Integer>> allHours = super.allHours;
-        ArrayList<ArrayList<Integer>> allMinutes = super.allMinutes;
-        ArrayList<ArrayList<String>> bookingUrls = super.bookingUrls;
-    }
 }

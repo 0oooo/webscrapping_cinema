@@ -1,8 +1,7 @@
 package eu.camillecroci.cst3130.coursework1.webscrapper;
 
 import eu.camillecroci.cst3130.coursework1.Cinema;
-import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
-import eu.camillecroci.cst3130.coursework1.DAO.MovieDAO;
+import eu.camillecroci.cst3130.coursework1.Movie;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -11,16 +10,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class WebScrapperVueCinema extends WebScrapper {
 
     private String VUE_URL_BASE = "https://www.myvue.com/cinema/";
+    private String ALL_TIMES = "All times";
+    private String COMING = "Coming soon";
 
     public WebScrapperVueCinema() {
     }
@@ -72,16 +72,13 @@ public class WebScrapperVueCinema extends WebScrapper {
                 this.scrollToElement(driver, js, top, movie);
                 WebElement title = movie.findElement(By.className("subtitle"));
                 String loadStatus = movie.findElement(By.className("filmlist__poster")).getAttribute("data-loaded");
-                System.out.println(title.getText() + " => data loaded: " + loadStatus);
                 if (loadStatus == null || !loadStatus.equalsIgnoreCase("true")) {
                     loaded = false;
                 } else if (loadStatus.equalsIgnoreCase("true")) {
                     loaded = true;
                 }
-                System.out.println("Loaded the bool = " + loaded);
             } while (loaded != true);
         }
-        System.out.println("All loaded ");
     }
 
     private int[] parseTime(String time) {
@@ -116,6 +113,143 @@ public class WebScrapperVueCinema extends WebScrapper {
         return other;
     }
 
+    public void scrapeMovies(String location, Cinema cinema) throws IOException { //todo add to cw
+
+        String vueUrl = getCinemaUrl(location);
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        WebDriver driver = new ChromeDriver(options);
+        WebDriverWait wait = new WebDriverWait(driver, 1);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        System.out.println("----------------- SCRAPPING FOR " + location + " -------------------------");
+
+        driver.get(vueUrl);
+
+        //Wait for page to load
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("whats-on-filters")));
+
+        Date date = new Date();
+
+        WebElement top = driver.findElement(By.id("whats-on-filters"));
+
+        for(int dayIndex = 0; dayIndex < 7; dayIndex++) { //maybe reduce to 6?
+
+            this.scrollDown(driver, js, top);
+
+            //Output details for individual products
+            List<WebElement> moviesList = driver.findElements(By.className("filmlist__inner"));
+
+            //no movie found (maybe it's late at night?)
+            if(moviesList.size() < 1){
+                return;
+            }
+
+            // We are waiting to have the image of the last movie to be loaded to scrap
+            this.loadAllImages(moviesList, driver, js, top);
+
+            System.out.println("________________________________ NEW DAY___________________________");
+            System.out.println("The date is: "  + date);
+
+            this.loadAllImages(moviesList, driver, js, top);
+
+            for (WebElement movie : moviesList) {
+
+                String title = movie.findElement(By.className("subtitle")).getText();
+
+                String description = movie.findElement(By.className("filmlist__synopsis")).getText();
+
+                String imageUrl = movie.findElement(By.className("filmlist__poster")).getAttribute("src");
+
+                Movie currentMovie = new Movie();
+                //Database search for the movie id. It will be added if it's not in the db
+                try {
+                    currentMovie = super.addMovie(title, description, imageUrl);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Problem when getting new movie from the database");
+                    System.out.println("Title = " + title);
+                    System.out.println("Description id = " + description);
+                    System.out.println("Image Url = " + imageUrl);
+                    System.out.println("Final ID of movie? = " + currentMovie.getId());
+                }
+
+                WebElement times = movie.findElement(By.className("filmlist__times__inner"));
+                List<WebElement> details = times.findElements(By.className("small"));
+                //for each movie we will get a list of hours + added details that goes with the screening
+
+                // Clean the array
+                for(int i = 0; i < details.size(); i++){
+                    String aa = details.get(i).getText();
+                    if(details.get(i).getText() == null || details.get(i).getText().equalsIgnoreCase("")){
+                        details.remove(details.get(i));
+                    }
+                }
+
+
+
+                for (WebElement detail : details) {
+                    Date screeningDate;
+                    String detailPerScreening;
+                    String urlForScreening ;
+                    //todo
+                    try {
+                        String detailsss = detail.getText();
+                        int hour = this.parseTime(detail.getText())[0];
+                        int min = this.parseTime(detail.getText())[1];
+                        screeningDate = setTimeForScreeningDate(date, hour, min);
+                        detailPerScreening = this.parseDetails(detail.getText());
+                        urlForScreening = movie.findElement(By.className("small")).getAttribute("href");
+                    } catch (Exception e) {
+                        continue;
+                    }
+
+                    //Each "detail" from the list is a new screening so we are saving a new one everytime
+                    try {
+                        super.
+                                saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailPerScreening, urlForScreening);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Problem when saving new screening in the database");
+                        System.out.println("Cinema id = " + cinema.getId());
+                        System.out.println("Movie id = " + currentMovie);
+                        System.out.println("Screening date = " + detailPerScreening);
+                        System.out.println("Url = " + urlForScreening);
+                    }
+                }
+            }
+            date = this.getNextDate(date); // todo add cw
+            int nextDay = dayIndex + 1;
+            js.executeScript("document.getElementsByName('group__filter_day')[" + nextDay + "].click()");
+           //todo add to cw
+        }
+
+        //Exit driver and close Chrome
+        driver.quit();
+    }
+
+    private Date getNextDate(Date currDate){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currDate);
+
+// manipulate date
+//        cal.add(Calendar.YEAR, 1);
+//        cal.add(Calendar.MONTH, 1);
+        cal.add(Calendar.DATE, 1);
+//        cal.add(Calendar.DAY_OF_MONTH, 1);
+
+// convert calendar to date
+        Date modifiedDate = cal.getTime();
+        return modifiedDate;
+    }
+
+    private Date setTimeForScreeningDate(Date date, int hour, int minutes){
+        date.setHours(hour);
+        date.setMinutes(minutes);
+        date.setSeconds(00);
+        return date;
+    }
+
     public void run() {
         super.init();
         List<Cinema> allVueCinema = cinemaDAO.getCinemasByCompanyName("Vue");
@@ -123,122 +257,12 @@ public class WebScrapperVueCinema extends WebScrapper {
         for (Cinema cinema : allVueCinema) {
             if(cinema.isActive()) {
                 try {
-                    scrapeMovies(cinema.getCinemaNameUrl());
-                    super.saveMovieInDatabase();
+                    scrapeMovies(cinema.getCinemaNameUrl(), cinema);
                 } catch (Exception e) {
                     e.printStackTrace();
-
                 }
             }
         }
-    }
-
-    public void scrapeMovies(String location) throws IOException {
-
-        String vueUrl = getCinemaUrl(location);
-
-        System.out.println("----------------- SCRAPPING FOR " + location + " -------------------------");
-
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
-
-        WebDriver driver = new ChromeDriver(options);
-
-        WebDriverWait wait = new WebDriverWait(driver, 1);
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        driver.get(vueUrl);
-
-        System.out.println("++++++++++++++ URL =  " + vueUrl + " +++++++++++++++++++");
-
-        //Wait for page to load
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("whats-on-filters")));
-
-        String page  = driver.getPageSource();
-
-        WebElement top = driver.findElement(By.id("whats-on-filters"));
-
-        this.scrollDown(driver, js, top);
-
-        //Output details for individual products
-        List<WebElement> moviesList = driver.findElements(By.className("filmlist__item"));
-
-        //no movie found (maybe it's late at night?)
-        if(moviesList.size() < 1){
-            return;
-        }
-
-        // We are waiting to have the image of the last movie to be loaded to scrap
-        this.loadAllImages(moviesList, driver, js, top);
-
-        for (WebElement movie : moviesList) {
-            WebElement title = movie.findElement(By.className("subtitle"));
-            titles.add(title.getText());
-
-            WebElement description = movie.findElement(By.className("filmlist__synopsis"));
-            descriptions.add(description.getText());
-
-            WebElement imageUrl = movie.findElement(By.className("filmlist__poster"));
-            imgUrls.add(imageUrl.getAttribute("src"));
-
-            List<WebElement> details = movie.findElements(By.className("small"));
-            //for each movie we will get a list of hours + added details that goes with the screening
-
-            // Trick to fix an issue with the last element of details being empty sometimes
-            String lastElement = details.get(details.size() - 1).getText();
-            if (lastElement == null || lastElement.equalsIgnoreCase("")) {
-                details.remove(details.size() - 1);
-            }
-
-            ArrayList<Integer> hours = new ArrayList<Integer>();
-            ArrayList<Integer> minutes = new ArrayList<Integer>();
-            ArrayList<String> detailsPerScreening = new ArrayList<String>();
-            ArrayList<String> screeningUrls = new ArrayList<String>();
-
-            for (WebElement detail : details) {
-                hours.add(this.parseTime(detail.getText())[0]);
-                minutes.add(this.parseTime(detail.getText())[1]);
-                detailsPerScreening.add(this.parseDetails(detail.getText()));
-                screeningUrls.add(movie.findElement(By.className("small")).getAttribute("href"));
-            }
-
-            allHours.add(hours);
-            allMinutes.add(minutes);
-            allDetails.add(detailsPerScreening);
-            bookingUrls.add(screeningUrls);
-
-
-            System.out.println("Title: " + title.getText());
-            System.out.println("Descrition: " + description.getText());
-            System.out.println("Image Url: " + imageUrl.getAttribute("src"));
-            for (int i = 0; i < hours.size(); i++) {
-                System.out.println("Dets: " + hours.get(i) + ":" + minutes.get(i) + " - " + detailsPerScreening.get(i));
-                System.out.println("Screening url: " + screeningUrls.get(i));
-            }
-
-        }
-
-        //Exit driver and close Chrome
-        driver.quit();
-    }
-
-    private void saveInDatabase(){
-
-    }
-
-    private void saveMovieInDatabase(String name, String detail, String description, String imgUrl){
-
-    }
-
-    private void test(){
-        ArrayList<String> titles = super.titles;
-        ArrayList<String> descriptions = super.descriptions;
-        ArrayList<String> imgUrls = super.imgUrls;
-        ArrayList<ArrayList<String>> allDetails = super.allDetails;
-        ArrayList<ArrayList<Integer>> allHours = super.allHours;
-        ArrayList<ArrayList<Integer>> allMinutes = super.allMinutes;
-        ArrayList<ArrayList<String>> bookingUrls = super.bookingUrls;
     }
 
 }

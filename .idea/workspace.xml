@@ -2,32 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb55dd4d-78a7-4b8f-8eff-07130753ae8a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/AbstractDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/SessionFactoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Cinema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Cinema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/CinemaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/CinemaDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/TicketServiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/TicketDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Screening.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Screening.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/beans.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/beans.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Cinema.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Cinema.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/CinemaDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/CinemaDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/TicketServiceDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Screening.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Screening.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.class" afterDir="false" />
@@ -55,6 +41,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -121,44 +108,39 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
           <line>33</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>157</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>126</line>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
-          <line>89</line>
+          <line>90</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
-          <line>84</line>
+          <line>85</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="65" />
+          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="66" />
+          <line>89</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="100" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
