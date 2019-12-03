@@ -28,14 +28,9 @@ public class Ticket {
     @Column(name="start_hour")
     private int startHour;
 
-    @Column(name="start_minute")
-    private int startMin;
-
     @Column(name="end_hour")
     private int endHour;
 
-    @Column(name="end_minute")
-    private int endMin;
 
     public Ticket(){}
 
@@ -75,55 +70,16 @@ public class Ticket {
         this.startHour = startHour;
     }
 
-    public void setStartMin(int startMin) {
-        this.startMin = startMin;
-    }
-
-    public void setStartTime(String time){
-        int hour = Integer.parseInt(time.substring(0, time.indexOf(':')));
-        int minute = Integer.parseInt(time.substring(time.indexOf(':') + 1));
-        setStartHour(hour);
-        setStartMin(minute);
-    }
-
     public int getStartHour() {
         return startHour;
     }
-
-    public int getStartMin() {
-        return startMin;
-    }
-
-    public String getStartTime(){
-        return startHour + ":" + startMin;
-    }
-
 
     public void setEndHour(int endHour) {
         this.endHour = endHour;
     }
 
-    public void setEndMin(int endMin) {
-        this.endMin = endMin;
-    }
-
-    public void setEndTime(String time){
-        int hour = Integer.parseInt(time.substring(0, time.indexOf(':')));
-        int minute = Integer.parseInt(time.substring(time.indexOf(':') + 1));
-        setEndHour(hour);
-        setEndMin(minute);
-    }
-
     public int getEndHour() {
         return endHour;
-    }
-
-    public int getEndMin() {
-        return endMin;
-    }
-
-    public String getEndTime(){
-        return endHour + ":" + endMin;
     }
 
     public Cinema getCinema() {

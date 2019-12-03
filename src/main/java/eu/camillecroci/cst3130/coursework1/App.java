@@ -1,9 +1,6 @@
 package eu.camillecroci.cst3130.coursework1;
 
-import eu.camillecroci.cst3130.coursework1.DAO.MovieDAO;
 import eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperManager;
-import eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperVueCinema;
-import javafx.application.Application;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

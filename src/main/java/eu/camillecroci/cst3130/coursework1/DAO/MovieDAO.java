@@ -14,7 +14,6 @@ public class MovieDAO extends AbstractDAO {
 
     public Movie addMovie(String name, String description, String url) {
 
-
         Movie movie = searchMovieByName(name);
         // to avoid putting a movie that is already in the db
         if(movie.getName() == name && movie.getDescription().equals("")){ //trick to replace the movies that have an empty description (from cineworld) with the same with description (from vue)
@@ -49,7 +48,8 @@ public class MovieDAO extends AbstractDAO {
                 .replace("-", "")
                 .replace("  ", " ")
                 .replace("unlimited screening", "")
-                .replace("movies for juniors", "");
+                .replace("movies for juniors", "")
+                .replace(" ", "_");
     }
 
     public Movie searchMovieByName(String name) {

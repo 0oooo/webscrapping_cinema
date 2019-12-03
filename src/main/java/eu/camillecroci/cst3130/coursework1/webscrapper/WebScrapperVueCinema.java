@@ -35,14 +35,14 @@ public class WebScrapperVueCinema extends WebScrapper {
         boolean hasGrown = true;
         while (hasGrown) {
 
-            this.scrollToElement(driver, js, top, dataloader);
+            this.scrollToElement(js, top, dataloader);
 
             try {
                 Thread.sleep(500);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            scrollToElement(driver, js, top, dataloader);
+            scrollToElement(js, top, dataloader);
 
             newSize = tempList.size();
             if (newSize != oldSize) {
@@ -62,7 +62,7 @@ public class WebScrapperVueCinema extends WebScrapper {
         for (WebElement movie : moviesList) {
             boolean loaded = true;
             do {
-                this.scrollToElement(driver, js, top, movie);
+                this.scrollToElement(js, top, movie);
                 WebElement title = movie.findElement(By.className("subtitle"));
                 String loadStatus = movie.findElement(By.className("filmlist__poster")).getAttribute("data-loaded");
                 if (loadStatus == null || !loadStatus.equalsIgnoreCase("true")) {
@@ -102,7 +102,7 @@ public class WebScrapperVueCinema extends WebScrapper {
         return parsedTime;
     }
 
-    public void scrapeMovies(String location, Cinema cinema, int startDay) throws IOException {
+    public void scrapeMovies(String location, Cinema cinema) throws IOException {
 
         String vueUrl = getCinemaUrl(location);
         ChromeOptions options = new ChromeOptions();
@@ -126,13 +126,9 @@ public class WebScrapperVueCinema extends WebScrapper {
 
         Date date = new Date();
 
-        if(startDay > 0){
-            date = super.getNextDate(date, startDay);
-        }
-
         WebElement top = driver.findElement(By.id("whats-on-filters"));
 
-        for(int dayIndex = startDay; dayIndex < 7; dayIndex++) { //maybe reduce to 6?
+        for(int dayIndex = 0; dayIndex < 7; dayIndex++) { //maybe reduce to 6?
 
             this.scrollDown(driver, js, top);
 
@@ -230,11 +226,10 @@ public class WebScrapperVueCinema extends WebScrapper {
     public void run() {
         super.init();
         List<Cinema> allVueCinema = cinemaDAO.getCinemasByCompanyName("Vue");
-
         for (Cinema cinema : allVueCinema) {
             if(cinema.isActive()) {
                 try {
-                    scrapeMovies(cinema.getCinemaNameUrl(), cinema, 0);
+                    scrapeMovies(cinema.getCinemaNameUrl(), cinema);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -5,9 +5,7 @@ import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
 import eu.camillecroci.cst3130.coursework1.DAO.MovieDAO;
 import eu.camillecroci.cst3130.coursework1.DAO.ScreeningDAO;
 import eu.camillecroci.cst3130.coursework1.Movie;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,7 +19,6 @@ public class WebScrapper extends Thread {
     protected MovieDAO movieDAO;
     protected ScreeningDAO screeningDAO;
 
-
     public void init() {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
@@ -31,9 +28,32 @@ public class WebScrapper extends Thread {
         screeningDAO = (ScreeningDAO) context.getBean("myScreeningDAO");
     }
 
-    protected void scrollToElement(WebDriver driver, JavascriptExecutor js, WebElement top, WebElement element) {
-        WebElement footer = driver.findElements(By.className("footer")).get(0);
-        js.executeScript("arguments[0].scrollIntoView();", footer);
+    public CinemaDAO getCinemaDAO() {
+        return cinemaDAO;
+    }
+
+    public void setCinemaDAO(CinemaDAO cinemaDAO) {
+        this.cinemaDAO = cinemaDAO;
+    }
+
+    public MovieDAO getMovieDAO() {
+        return movieDAO;
+    }
+
+    public void setMovieDAO(MovieDAO movieDAO) {
+        this.movieDAO = movieDAO;
+    }
+
+    public ScreeningDAO getScreeningDAO() {
+        return screeningDAO;
+    }
+
+    public void setScreeningDAO(ScreeningDAO screeningDAO) {
+        this.screeningDAO = screeningDAO;
+    }
+
+    protected void scrollToElement(JavascriptExecutor js, WebElement top, WebElement element) {
+        js.executeScript("arguments[0].scrollIntoView();", element);
         try {
             Thread.sleep(500);
         } catch (Exception e) {
@@ -45,7 +65,6 @@ public class WebScrapper extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        js.executeScript("arguments[0].scrollIntoView();", element);
     }
 
     protected Date setTimeForScreeningDate(Date date, int hour, int minutes) {
@@ -59,10 +78,10 @@ public class WebScrapper extends Thread {
         Calendar cal = Calendar.getInstance();
         cal.setTime(currDate);
 
-// manipulate date
+        // manipulate date
         cal.add(Calendar.DATE, amount);
 
-// convert calendar to date
+        // convert calendar to date
         Date modifiedDate = cal.getTime();
         return modifiedDate;
     }

@@ -30,6 +30,10 @@ public class SessionFactoryManager {
       }
     }
 
+    public static void setSessionFactory(SessionFactory sessionFactory) {
+        SessionFactoryManager.sessionFactory = sessionFactory;
+    }
+
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }

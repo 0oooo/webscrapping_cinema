@@ -11,11 +11,6 @@ public class WebScrapperManager {
             ws.start();
         }
 
-//        WebScrapperVueCinema vue = new WebScrapperVueCinema();
-//        WebScrapperCineworld cw = new WebScrapperCineworld();
-//
-//        vue.start();
-//        cw.start();
     }
 
     public List<WebScrapper> getWebScrappersList() {

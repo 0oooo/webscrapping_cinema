@@ -2,19 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb55dd4d-78a7-4b8f-8eff-07130753ae8a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/AbstractDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/AbstractDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/SessionFactoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/SessionFactoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/Ticket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/beans.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/coursework1.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/beans.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/AbstractDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/AbstractDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/ScreeningDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/SessionFactoryManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/DAO/SessionFactoryManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Ticket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/Ticket.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperManager.class" afterDir="false" />
@@ -107,38 +112,65 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1878" height="165" key="GridCell.Tab.0.bottom" timestamp="1575367983880">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state x="125" y="-767" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1575405339670">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="1878" height="165" key="GridCell.Tab.0.bottom/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575367983880" />
-    <state width="1878" height="165" key="GridCell.Tab.0.center" timestamp="1575367983877">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state x="125" y="-767" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575405339670" />
+    <state x="383" y="-838" key="#com.intellij.ide.util.MemberChooser" timestamp="1575411597050">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="1878" height="165" key="GridCell.Tab.0.center/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575367983877" />
-    <state width="1878" height="165" key="GridCell.Tab.0.left" timestamp="1575367983876">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state x="611" y="-838" key="#com.intellij.ide.util.MemberChooser/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384549736" />
+    <state x="383" y="-838" key="#com.intellij.ide.util.MemberChooser/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575411597050" />
+    <state width="1878" height="224" key="GridCell.Tab.0.bottom" timestamp="1575414265199">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="1878" height="165" key="GridCell.Tab.0.left/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575367983876" />
-    <state width="1878" height="165" key="GridCell.Tab.0.right" timestamp="1575367983879">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state width="1878" height="242" key="GridCell.Tab.0.bottom/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384824460" />
+    <state width="1878" height="224" key="GridCell.Tab.0.bottom/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575414265199" />
+    <state width="1214" height="242" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1575389645627" />
+    <state width="1878" height="224" key="GridCell.Tab.0.center" timestamp="1575414265197">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="1878" height="165" key="GridCell.Tab.0.right/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575367983879" />
-    <state width="1878" height="242" key="GridCell.Tab.1.bottom" timestamp="1575365626871">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state width="1878" height="242" key="GridCell.Tab.0.center/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384824458" />
+    <state width="1878" height="224" key="GridCell.Tab.0.center/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575414265197" />
+    <state width="1214" height="242" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1575389645625" />
+    <state width="1878" height="224" key="GridCell.Tab.0.left" timestamp="1575414265196">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="1878" height="242" key="GridCell.Tab.1.bottom/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575365626871" />
-    <state width="1878" height="242" key="GridCell.Tab.1.center" timestamp="1575365626870">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state width="1878" height="242" key="GridCell.Tab.0.left/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384824457" />
+    <state width="1878" height="224" key="GridCell.Tab.0.left/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575414265196" />
+    <state width="1214" height="242" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1575389645620" />
+    <state width="1878" height="224" key="GridCell.Tab.0.right" timestamp="1575414265198">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="1878" height="242" key="GridCell.Tab.1.center/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575365626870" />
-    <state width="1878" height="242" key="GridCell.Tab.1.left" timestamp="1575365626869">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state width="1878" height="242" key="GridCell.Tab.0.right/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384824459" />
+    <state width="1878" height="224" key="GridCell.Tab.0.right/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575414265198" />
+    <state width="1214" height="242" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1575389645626" />
+    <state width="1214" height="242" key="GridCell.Tab.1.bottom" timestamp="1575389645629">
+      <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1878" height="242" key="GridCell.Tab.1.left/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575365626869" />
-    <state width="1878" height="242" key="GridCell.Tab.1.right" timestamp="1575365626870">
-      <screen x="-345" y="-1057" width="1920" height="1057" />
+    <state width="1878" height="242" key="GridCell.Tab.1.bottom/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384831067" />
+    <state width="1214" height="242" key="GridCell.Tab.1.bottom/0.23.1280.777@0.23.1280.777" timestamp="1575389645629" />
+    <state width="1214" height="242" key="GridCell.Tab.1.center" timestamp="1575389645628">
+      <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state width="1878" height="242" key="GridCell.Tab.1.right/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575365626870" />
+    <state width="1878" height="242" key="GridCell.Tab.1.center/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384831066" />
+    <state width="1214" height="242" key="GridCell.Tab.1.center/0.23.1280.777@0.23.1280.777" timestamp="1575389645628" />
+    <state width="1214" height="242" key="GridCell.Tab.1.left" timestamp="1575389645627">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1878" height="242" key="GridCell.Tab.1.left/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384831066" />
+    <state width="1214" height="242" key="GridCell.Tab.1.left/0.23.1280.777@0.23.1280.777" timestamp="1575389645627" />
+    <state width="1214" height="242" key="GridCell.Tab.1.right" timestamp="1575389645628">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="1878" height="242" key="GridCell.Tab.1.right/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575384831067" />
+    <state width="1214" height="242" key="GridCell.Tab.1.right/0.23.1280.777@0.23.1280.777" timestamp="1575389645628" />
+    <state x="-114" y="-853" width="1001" height="648" key="find.popup" timestamp="1575411198183">
+      <screen x="-573" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="114" y="-853" width="1001" height="648" key="find.popup/-345.-1057.1920.1057/0.23.1280.777@-345.-1057.1920.1057" timestamp="1575383554192" />
+    <state x="-114" y="-853" width="1001" height="648" key="find.popup/0.23.1280.777/-573.-1057.1920.1057@-573.-1057.1920.1057" timestamp="1575411198183" />
+    <state x="306" y="173" width="667" height="476" key="find.popup/0.23.1280.777@0.23.1280.777" timestamp="1575381368051" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -154,69 +186,39 @@
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
-          <line>73</line>
-          <option name="timeStamp" value="94" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="97" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="108" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>204</line>
+          <line>200</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>202</line>
+          <line>198</line>
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>203</line>
+          <line>199</line>
           <option name="timeStamp" value="111" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>192</line>
+          <line>188</line>
           <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>173</line>
-          <option name="timeStamp" value="115" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>179</line>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>188</line>
+          <line>184</line>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>152</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperVueCinema.java</url>
-          <line>154</line>
-          <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/DAO/MovieDAO.java</url>
-          <line>19</line>
+          <line>18</line>
           <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/eu/camillecroci/cst3130/coursework1/webscrapper/WebScrapperCineworld.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

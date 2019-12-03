@@ -12,25 +12,24 @@ import java.util.List;
 
 public class ScreeningDAO extends AbstractDAO {
 
-    public int existsScreening(Date screeningDate, Movie movie, Cinema cinema){
+    public int existsScreening(Date screeningDate, Movie movie, Cinema cinema) {
         Session session = super.getCurrentSession();
         Screening screening = new Screening();
         try {
             session.beginTransaction();
 
             Query query = session.createQuery("select s from Screening as s where s.movie=:movie AND s.cinema=:cinema AND s.screeningDate=:date")
-                    .setParameter("movie",movie).setParameter("cinema", cinema).setParameter("date", screeningDate);
+                    .setParameter("movie", movie).setParameter("cinema", cinema).setParameter("date", screeningDate);
             List<Screening> screenings = query.list();
 
-            if(screenings.size() <= 0){
+            if (screenings.size() <= 0) {
                 System.out.println("Screening already exists for cinema " + cinema.getName() + " for movie " + movie.getName());
                 session.close();
                 return 0;
             }
-        } catch(NoResultException nre) {
+        } catch (NoResultException nre) {
             return 0;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             e.printStackTrace();
         }
@@ -40,7 +39,7 @@ public class ScreeningDAO extends AbstractDAO {
 
     public int addScreening(Date screeningDate, Movie movie, Cinema cinema, String details, String url) {
 
-        if(existsScreening(screeningDate, movie, cinema) != 0){
+        if (existsScreening(screeningDate, movie, cinema) != 0) {
             return 0;
         }
         Session session = super.getCurrentSession();
@@ -59,7 +58,7 @@ public class ScreeningDAO extends AbstractDAO {
 
         session.getTransaction().commit();
 
-        System.out.println("Screening added:" );
+        System.out.println("Screening added:");
         System.out.println("Cinema " + cinema.getCompanyName() + " " + cinema.getName());
         System.out.println(" Movie " + movie.getName());
 
