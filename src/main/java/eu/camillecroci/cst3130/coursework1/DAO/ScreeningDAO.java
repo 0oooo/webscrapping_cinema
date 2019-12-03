@@ -23,10 +23,10 @@ public class ScreeningDAO extends AbstractDAO {
             List<Screening> screenings = query.list();
 
             if(screenings.size() <= 0){
+                System.out.println("Screening already exists for cinema " + cinema.getName() + " for movie " + movie.getName());
                 session.close();
                 return 0;
             }
-            System.out.println("I have found " + screening.getId());
         } catch(NoResultException nre) {
             return 0;
         }
@@ -59,7 +59,9 @@ public class ScreeningDAO extends AbstractDAO {
 
         session.getTransaction().commit();
 
-        System.out.println("Screening added to database with ID" + screening.getId());
+        System.out.println("Screening added:" );
+        System.out.println("Cinema " + cinema.getCompanyName() + " " + cinema.getName());
+        System.out.println(" Movie " + movie.getName());
 
         session.close();
 

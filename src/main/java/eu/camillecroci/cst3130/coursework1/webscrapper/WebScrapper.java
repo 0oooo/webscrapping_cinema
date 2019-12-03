@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class WebScrapper extends Thread {
@@ -22,7 +22,7 @@ public class WebScrapper extends Thread {
     protected ScreeningDAO screeningDAO;
 
 
-    public void init(){
+    public void init() {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 
@@ -31,7 +31,7 @@ public class WebScrapper extends Thread {
         screeningDAO = (ScreeningDAO) context.getBean("myScreeningDAO");
     }
 
-    protected void scrollToElement(WebDriver driver, JavascriptExecutor js, WebElement top, WebElement element){
+    protected void scrollToElement(WebDriver driver, JavascriptExecutor js, WebElement top, WebElement element) {
         WebElement footer = driver.findElements(By.className("footer")).get(0);
         js.executeScript("arguments[0].scrollIntoView();", footer);
         try {
@@ -48,19 +48,31 @@ public class WebScrapper extends Thread {
         js.executeScript("arguments[0].scrollIntoView();", element);
     }
 
+    protected Date setTimeForScreeningDate(Date date, int hour, int minutes) {
+        date.setHours(hour);
+        date.setMinutes(minutes);
+        date.setSeconds(00);
+        return date;
+    }
 
-//    protected Movie getMovie(String title, String description, String imgUrl){
-//        if(movieDAO.searchMovieByName(title) == null){
-//            return movieDAO.addMovieAndGetMovie(title, description, imgUrl);
-//        }
-//        return movieDAO.searchMovieByName(title);
-//    }
+    protected Date getNextDate(Date currDate, int amount) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currDate);
 
-    protected Movie addMovie(String title, String description, String imgUrl){
+// manipulate date
+        cal.add(Calendar.DATE, amount);
+
+// convert calendar to date
+        Date modifiedDate = cal.getTime();
+        return modifiedDate;
+    }
+
+
+    protected synchronized Movie addMovie(String title, String description, String imgUrl) {
         return movieDAO.addMovie(title, description, imgUrl);
     }
 
-    protected void saveScreeningInDatabase(Cinema cinema, Movie movie, Date screeningDate, String details, String url){
+    protected synchronized void saveScreeningInDatabase(Cinema cinema, Movie movie, Date screeningDate, String details, String url) {
         screeningDAO.addScreening(screeningDate, movie, cinema, details, url);
     }
 

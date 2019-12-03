@@ -58,11 +58,16 @@
         <property name="sessionFactoryManager" ref="sessionFactoryManager"></property>
     </bean>
 
-    <bean id="myWebscrapperManager" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperManager"></bean>
-
-
-    <bean id="myWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapper">
+    <bean id="myWebscrapperManager" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperManager">
+        <property name="webScrappersList">
+            <list value-type="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapper">
+                <ref bean="myVueWebScrapper"></ref>
+                <ref bean="myCineworldWebScrapper"></ref>
+            </list>
+        </property>
     </bean>
+
+    <bean id="myWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapper"></bean>
 
     <bean id="myVueWebScrapper" class="eu.camillecroci.cst3130.coursework1.webscrapper.WebScrapperVueCinema"></bean>
 

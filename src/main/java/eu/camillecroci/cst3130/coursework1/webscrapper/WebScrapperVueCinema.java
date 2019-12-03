@@ -12,18 +12,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class WebScrapperVueCinema extends WebScrapper {
 
     private String VUE_URL_BASE = "https://www.myvue.com/cinema/";
-    private String ALL_TIMES = "All times";
-    private String COMING = "Coming soon";
-
-    public WebScrapperVueCinema() {
-    }
 
     public String getCinemaUrl(String cinemaName) {
         return VUE_URL_BASE + cinemaName + "/whats-on";
@@ -65,7 +59,6 @@ public class WebScrapperVueCinema extends WebScrapper {
      * out of the image
      */
     private void loadAllImages(List<WebElement> moviesList, WebDriver driver, JavascriptExecutor js, WebElement top) {
-
         for (WebElement movie : moviesList) {
             boolean loaded = true;
             do {
@@ -75,10 +68,18 @@ public class WebScrapperVueCinema extends WebScrapper {
                 if (loadStatus == null || !loadStatus.equalsIgnoreCase("true")) {
                     loaded = false;
                 } else if (loadStatus.equalsIgnoreCase("true")) {
+                    System.out.println("Image loaded for vue: " + title.getText());
                     loaded = true;
                 }
             } while (loaded != true);
         }
+    }
+
+    private String parseDetails(String element) {
+        String other = element.substring(element.indexOf("\n") + 1);
+        other = other.replace("\n", " - ");
+        other = other.replace("- -", "- ");
+        return other;
     }
 
     private int[] parseTime(String time) {
@@ -101,19 +102,7 @@ public class WebScrapperVueCinema extends WebScrapper {
         return parsedTime;
     }
 
-    private String parseDetails(String element) {
-        String parsedDetails = "";
-        String separator = "\n";
-
-        String other = element.substring(element.indexOf("\n") + 1);
-
-        other = other.replace("\n", " - ");
-        other = other.replace("- -", "- ");
-
-        return other;
-    }
-
-    public void scrapeMovies(String location, Cinema cinema) throws IOException { //todo add to cw
+    public void scrapeMovies(String location, Cinema cinema, int startDay) throws IOException {
 
         String vueUrl = getCinemaUrl(location);
         ChromeOptions options = new ChromeOptions();
@@ -126,14 +115,24 @@ public class WebScrapperVueCinema extends WebScrapper {
 
         driver.get(vueUrl);
 
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //Wait for page to load
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("whats-on-filters")));
 
         Date date = new Date();
 
+        if(startDay > 0){
+            date = super.getNextDate(date, startDay);
+        }
+
         WebElement top = driver.findElement(By.id("whats-on-filters"));
 
-        for(int dayIndex = 0; dayIndex < 7; dayIndex++) { //maybe reduce to 6?
+        for(int dayIndex = startDay; dayIndex < 7; dayIndex++) { //maybe reduce to 6?
 
             this.scrollDown(driver, js, top);
 
@@ -148,10 +147,8 @@ public class WebScrapperVueCinema extends WebScrapper {
             // We are waiting to have the image of the last movie to be loaded to scrap
             this.loadAllImages(moviesList, driver, js, top);
 
-            System.out.println("________________________________ NEW DAY___________________________");
+            System.out.println("________________________________VUE : NEW DAY___________________________");
             System.out.println("The date is: "  + date);
-
-            this.loadAllImages(moviesList, driver, js, top);
 
             for (WebElement movie : moviesList) {
 
@@ -192,12 +189,10 @@ public class WebScrapperVueCinema extends WebScrapper {
                     Date screeningDate;
                     String detailPerScreening;
                     String urlForScreening ;
-                    //todo
                     try {
-                        String detailsss = detail.getText();
                         int hour = this.parseTime(detail.getText())[0];
                         int min = this.parseTime(detail.getText())[1];
-                        screeningDate = setTimeForScreeningDate(date, hour, min);
+                        screeningDate = super.setTimeForScreeningDate(date, hour, min);
                         detailPerScreening = this.parseDetails(detail.getText());
                         urlForScreening = movie.findElement(By.className("small")).getAttribute("href");
                     } catch (Exception e) {
@@ -206,8 +201,8 @@ public class WebScrapperVueCinema extends WebScrapper {
 
                     //Each "detail" from the list is a new screening so we are saving a new one everytime
                     try {
-                        super.
-                                saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailPerScreening, urlForScreening);
+                        System.out.println("ATTEMPTING TO SAVE A SCREENING FOR VUE");
+                        super.saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailPerScreening, urlForScreening);
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println("Problem when saving new screening in the database");
@@ -218,36 +213,18 @@ public class WebScrapperVueCinema extends WebScrapper {
                     }
                 }
             }
-            date = this.getNextDate(date); // todo add cw
+            date = super.getNextDate(date, 1);
             int nextDay = dayIndex + 1;
             js.executeScript("document.getElementsByName('group__filter_day')[" + nextDay + "].click()");
-           //todo add to cw
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         //Exit driver and close Chrome
         driver.quit();
-    }
-
-    private Date getNextDate(Date currDate){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(currDate);
-
-// manipulate date
-//        cal.add(Calendar.YEAR, 1);
-//        cal.add(Calendar.MONTH, 1);
-        cal.add(Calendar.DATE, 1);
-//        cal.add(Calendar.DAY_OF_MONTH, 1);
-
-// convert calendar to date
-        Date modifiedDate = cal.getTime();
-        return modifiedDate;
-    }
-
-    private Date setTimeForScreeningDate(Date date, int hour, int minutes){
-        date.setHours(hour);
-        date.setMinutes(minutes);
-        date.setSeconds(00);
-        return date;
     }
 
     public void run() {
@@ -257,7 +234,7 @@ public class WebScrapperVueCinema extends WebScrapper {
         for (Cinema cinema : allVueCinema) {
             if(cinema.isActive()) {
                 try {
-                    scrapeMovies(cinema.getCinemaNameUrl(), cinema);
+                    scrapeMovies(cinema.getCinemaNameUrl(), cinema, 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
