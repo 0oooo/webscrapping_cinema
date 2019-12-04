@@ -1,7 +1,6 @@
-package eu.camillecroci.cst3130.coursework1.webscrapper;
+package eu.camillecroci.cst3130.coursework1.webscraper;
 
 import eu.camillecroci.cst3130.coursework1.Cinema;
-import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
 import eu.camillecroci.cst3130.coursework1.Movie;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class WebScrapperCineworld extends WebScrapper {
+public class WebScraperCineworld extends WebScraper {
 
     private String CINEWORLD_URL_BASE = "https://www.cineworld.co.uk/#/buy-tickets-by-cinema?in-cinema=";
     private String PREORDER = "PRE-ORDER YOUR TICKETS NOW";
@@ -75,6 +74,14 @@ public class WebScrapperCineworld extends WebScrapper {
         return parsedTime;
     }
 
+    private void waitThread(int amount){
+        try {
+            Thread.sleep(amount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void waitThread(){
         try {
             Thread.sleep(2000);
@@ -87,7 +94,7 @@ public class WebScrapperCineworld extends WebScrapper {
 
         String cineworldUrl  = getCinemaUrl( location);
         ChromeOptions options  = new ChromeOptions();
-        options.setHeadless(true);
+        options.setHeadless(false);
         WebDriver driver = new ChromeDriver(options);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, 1);
@@ -140,15 +147,17 @@ public class WebScrapperCineworld extends WebScrapper {
                 String title = movie.findElement(By.className("qb-movie-name")).getText();
 
                 //todo find a solution for the description
-//                WebElement link = movie.findElement(By.className("qb-movie-link"));
-//                String description = this.getDescription(driver, wait, js,  link);
-//                js.executeScript("window.history.back()");
-//                //Wait because we still had some issues here with unloaded title
-//                this.waitThread();
-//                // We are waiting to have the image of the last movie to be loaded to scrap again
-//                this.loadAllImages(moviesList, driver, js);
+                WebElement link = movie.findElement(By.className("qb-movie-link"));
+                String description = getDescription(driver, wait, js,  link);
+                js.executeScript("window.history.back()");
+                //Wait because we still had some issues here with unloaded title
+                waitThread(2000);
 
-                String description = "";
+                System.out.println(driver.getPageSource());
+                // We are waiting to have the image of the last movie to be loaded to scrap again
+                loadAllImages(moviesList, driver, js);
+
+//                String description = "";
 
                 // URL of the image of the movie
                 String imageUrl = movie.findElement(By.className("v-lazy-loaded")).getAttribute("src");
@@ -207,10 +216,9 @@ public class WebScrapperCineworld extends WebScrapper {
     }
 
     public void run(){
-        super.init();
-        List<Cinema> allCinewold = cinemaDAO.getCinemasByCompanyName("CineWorld");
+        List<Cinema> allCineworld = cinemaDAO.getCinemasByCompanyName("CineWorld");
 
-        for(Cinema cinema : allCinewold){
+        for(Cinema cinema : allCineworld){
             if(cinema.isActive()) {
                 try {
                     scrapeMovies(cinema.getCinemaNameUrl(), cinema);

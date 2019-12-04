@@ -1,4 +1,4 @@
-package eu.camillecroci.cst3130.coursework1.webscrapper;
+package eu.camillecroci.cst3130.coursework1.webscraper;
 
 import eu.camillecroci.cst3130.coursework1.Cinema;
 import eu.camillecroci.cst3130.coursework1.Movie;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class WebScrapperVueCinema extends WebScrapper {
+public class WebScraperVueCinema extends WebScraper {
 
     private String VUE_URL_BASE = "https://www.myvue.com/cinema/";
 
@@ -224,7 +224,6 @@ public class WebScrapperVueCinema extends WebScrapper {
     }
 
     public void run() {
-        super.init();
         List<Cinema> allVueCinema = cinemaDAO.getCinemasByCompanyName("Vue");
         for (Cinema cinema : allVueCinema) {
             if(cinema.isActive()) {

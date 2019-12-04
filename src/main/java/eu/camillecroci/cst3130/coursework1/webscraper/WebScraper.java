@@ -1,4 +1,4 @@
-package eu.camillecroci.cst3130.coursework1.webscrapper;
+package eu.camillecroci.cst3130.coursework1.webscraper;
 
 import eu.camillecroci.cst3130.coursework1.Cinema;
 import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
@@ -7,26 +7,15 @@ import eu.camillecroci.cst3130.coursework1.DAO.ScreeningDAO;
 import eu.camillecroci.cst3130.coursework1.Movie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class WebScrapper extends Thread {
+public class WebScraper extends Thread {
 
     protected CinemaDAO cinemaDAO;
     protected MovieDAO movieDAO;
     protected ScreeningDAO screeningDAO;
-
-    public void init() {
-
-        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-
-        cinemaDAO = (CinemaDAO) context.getBean("myCinemaDAO");
-        movieDAO = (MovieDAO) context.getBean("myMovieDAO");
-        screeningDAO = (ScreeningDAO) context.getBean("myScreeningDAO");
-    }
 
     public CinemaDAO getCinemaDAO() {
         return cinemaDAO;
