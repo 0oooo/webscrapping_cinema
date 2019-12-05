@@ -4,27 +4,24 @@ import eu.camillecroci.cst3130.coursework1.Movie;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Set;
 
 public class MovieDAO extends AbstractDAO {
 
     public Movie addMovie(String name, String description, String url) {
 
-        Movie movie = searchMovieByName(name);
-        // to avoid putting a movie that is already in the db
-        if(movie.getName() == name && movie.getDescription().equals("")){ //trick to replace the movies that have an empty description (from cineworld) with the same with description (from vue)
+        Movie searchedMovie = searchMovieByTitle(name);
 
-        } else if(!movie.getName().equalsIgnoreCase("DefaultDefault")){
-            return movie;
+        if(searchedMovie != null){
+            return searchedMovie;
         }
+        Movie movie = new Movie();
 
         Session session = super.getCurrentSession();
 
-        movie.setName(cleanName(name));
+        movie.setName(cleanTitle(name));
         movie.setDescription(description);
         movie.setUrl(url);
 
@@ -41,8 +38,9 @@ public class MovieDAO extends AbstractDAO {
         return movie;
     }
 
-    private String cleanName(String name){
-        return name.toLowerCase()
+    private String cleanTitle(String title){
+        title =  title.toLowerCase()
+                .replace(" ii", " 2") // should find a way to make that more automatic
                 .replace("'", "")
                 .replace(":", "")
                 .replace("-", "")
@@ -50,26 +48,32 @@ public class MovieDAO extends AbstractDAO {
                 .replace("unlimited screening", "")
                 .replace("movies for juniors", "")
                 .replace(" ", "_");
+
+        if ( title.charAt(title.length() - 1) == '_')
+            title = title.substring(0, title.length() - 1);
+
+        return title;
     }
 
-    public Movie searchMovieByName(String name) {
-
-        name = cleanName(name);
+    public Movie searchMovieByTitle(String title) {
+        //remove all the special characters of titles to avoid entering the same movie twice
+        title = cleanTitle(title);
 
         Session session = super.getCurrentSession();
-
-        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-        Movie movie = (Movie) context.getBean("defaultMovie");
+        Movie movie = new Movie();
 
         try {
             session.beginTransaction();
 
-            Query query = session.createQuery("from Movie where name = '" + name + "'");
+            // search if we already have a movie in the db with this title
+            Query query = session.createQuery("from Movie where name = '" + title + "'");
             List<Movie> movies = query.list();
 
             if(movies.size() > 0){
                 //we return the first result
                 movie = movies.get(0);
+            } else{
+                movie = null;
             }
         } catch (HibernateException e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
@@ -77,6 +81,33 @@ public class MovieDAO extends AbstractDAO {
         } finally {
             session.close();
             return movie;
+        }
+    }
+
+    public void addDescription(Set<String[]> allTitlesToDescriptionUrls){
+
+        for(String[] titleToDescriptionUrl : allTitlesToDescriptionUrls){
+            String title = titleToDescriptionUrl[0];
+            title = cleanTitle(title);
+
+            Movie searchedMovie = searchMovieByTitle(title);
+
+            if(searchedMovie == null) {
+                throw new NullPointerException("There is no movie we can add a description to");
+            }
+
+            if(searchedMovie.getDescription() == null || searchedMovie.getDescription().equals("")){
+                String description = titleToDescriptionUrl[1];
+
+                Session session = super.getCurrentSession();
+                session.beginTransaction();
+                Movie movieToUpdate = (Movie) session.get(Movie.class, searchedMovie.getId());
+                movieToUpdate.setDescription(description);
+                session.update(movieToUpdate);
+                session.getTransaction().commit();
+                System.out.println("Description added for movie : " + searchedMovie.getName());
+                session.close();
+            }
         }
     }
 

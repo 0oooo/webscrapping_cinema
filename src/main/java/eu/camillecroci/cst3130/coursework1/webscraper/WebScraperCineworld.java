@@ -12,14 +12,23 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class WebScraperCineworld extends WebScraper {
 
-    private String CINEWORLD_URL_BASE = "https://www.cineworld.co.uk/#/buy-tickets-by-cinema?in-cinema=";
-    private String PREORDER = "PRE-ORDER YOUR TICKETS NOW";
-    private String JUNIOR_MOVIE = "Movies for Juniors: Discounted ticket price available, for children and accompanying adults. All customers aged 16 or over must be accompanying a child. Children under 14 years of age must be accompanied by an adult.";
+    private String CINEWORLD_URL_BASE;
+    private String PREORDER;
+    private String JUNIOR_MOVIE;
+    private Set<String[]> descriptionUrls;
+    private Set<String[]> titlesAndDescriptions;
+
+    public WebScraperCineworld(){
+        CINEWORLD_URL_BASE = "https://www.cineworld.co.uk/#/buy-tickets-by-cinema?in-cinema=";
+        PREORDER = "PRE-ORDER YOUR TICKETS NOW";
+        JUNIOR_MOVIE = "Movies for Juniors: Discounted ticket price available, for children and accompanying adults. All customers aged 16 or over must be accompanying a child. Children under 14 years of age must be accompanied by an adult.";
+        descriptionUrls = new HashSet<>();
+        titlesAndDescriptions = new HashSet<>();
+    }
 
     public String getCinemaUrl(String cinemaName){
         return CINEWORLD_URL_BASE + cinemaName;
@@ -34,7 +43,7 @@ public class WebScraperCineworld extends WebScraper {
 
                     List<WebElement> loadedImage = movie.findElements(By.className("v-lazy-loaded"));
 
-                    this.scrollToElement(js, top, movie);
+                    scrollToElement(js, top, movie);
                     for(WebElement img : loadedImage) {
                         System.out.println("AND THE PROOF IT IS ALL LOADED: " + img.getAttribute("src"));
                     }
@@ -48,11 +57,19 @@ public class WebScraperCineworld extends WebScraper {
         System.out.println("All loaded ");
     }
 
-    private String getDescription(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, WebElement link){
-        js.executeScript("arguments[0].click()", link);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("text-content")));
-        String description = this.cleanDescription(driver.findElement(By.className("text-content")).getText());
-        return description;
+    private void getDescriptions( JavascriptExecutor js,  WebDriverWait wait, WebDriver driver ){
+        for(String[] titleAndUrl : descriptionUrls) {
+            String title = titleAndUrl[0];
+            String link = titleAndUrl[1];
+
+            driver.get(link);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("text-content")));
+
+            String description = cleanDescription(driver.findElement(By.className("text-content")).getText());
+
+            String[] titleAndDescription = {title, description};
+            titlesAndDescriptions.add(titleAndDescription);
+        }
     }
 
     private String cleanDescription(String description){
@@ -82,19 +99,22 @@ public class WebScraperCineworld extends WebScraper {
         }
     }
 
-    private void waitThread(){
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    // Hack to get all the descriptions afterwards as clicking + going backwards was a pb with selenium
+    // First we create a map of all the movies and their url to their description.
+    // Then we create the movie with an empty description.
+    // As some of them may have been added to the database by vue, they may have their description already
+    // Then at the end of the scraping, we gonna check what movies don't have a description and add it.
+    private void storeDescriptionUrls(String title, String descriptionUrl ){
+        String[] titleToDescription = new String[2];
+        titleToDescription[0] = title;
+        titleToDescription[1] = descriptionUrl;
+        descriptionUrls.add(titleToDescription);
     }
 
     public void scrapeMovies(String location, Cinema cinema) throws IOException {
-
         String cineworldUrl  = getCinemaUrl( location);
         ChromeOptions options  = new ChromeOptions();
-        options.setHeadless(false);
+        options.setHeadless(true);
         WebDriver driver = new ChromeDriver(options);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, 1);
@@ -103,7 +123,7 @@ public class WebScraperCineworld extends WebScraper {
 
         Date date = new Date();
 
-        for(int dayIndex = 0; dayIndex < 7; dayIndex++) {
+//        for(int dayIndex = 0; dayIndex < 7; dayIndex++) {
 
             System.out.println("________________________________ CW NEW DAY___________________________");
             System.out.println("The date is: "  + date);
@@ -129,10 +149,9 @@ public class WebScraperCineworld extends WebScraper {
             }
 
             // We are waiting to have the image of the last movie to be loaded to scrap
-            this.loadAllImages(moviesList, driver, js);
+            loadAllImages(moviesList, driver, js);
 
             for (WebElement movie : moviesList) {
-
 
                 // We ignore the movies that are not out yet (Pre-order in cineworld)
                 String preorderedInfo = movie.findElement(By.className("qb-movie-info-column")).getText();
@@ -141,23 +160,15 @@ public class WebScraperCineworld extends WebScraper {
                 }
 
                 //Wait because we still had some issues here with unloaded title
-                this.waitThread();
+                waitThread(2000);
 
                 // Title of the movie
                 String title = movie.findElement(By.className("qb-movie-name")).getText();
 
-                //todo find a solution for the description
-                WebElement link = movie.findElement(By.className("qb-movie-link"));
-                String description = getDescription(driver, wait, js,  link);
-                js.executeScript("window.history.back()");
-                //Wait because we still had some issues here with unloaded title
-                waitThread(2000);
-
-                System.out.println(driver.getPageSource());
-                // We are waiting to have the image of the last movie to be loaded to scrap again
-                loadAllImages(moviesList, driver, js);
-
-//                String description = "";
+                //Description of the movie
+                String descriptionUrl = movie.findElement(By.className("qb-movie-link")).getAttribute("href");
+                storeDescriptionUrls(title, descriptionUrl);
+                String descriptionPlaceHolder = "";
 
                 // URL of the image of the movie
                 String imageUrl = movie.findElement(By.className("v-lazy-loaded")).getAttribute("src");
@@ -165,7 +176,7 @@ public class WebScraperCineworld extends WebScraper {
                 //Database search for the movie id. It will be added if it's not in the db
                 Movie currentMovie = new Movie();
                 try {
-                    currentMovie = super.addMovie(title, description, imageUrl);
+                    currentMovie = super.addMovie(title, descriptionPlaceHolder, imageUrl);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -184,8 +195,8 @@ public class WebScraperCineworld extends WebScraper {
                         // Each screening time is parsed out of the details, then added to the date.
                         // We also get the url of the screening to be able to use it in our front end (let the user get the click)
                         try {
-                            int hour = this.parseTime(time.getText())[0];
-                            int min = this.parseTime(time.getText())[1];
+                            int hour = parseTime(time.getText())[0];
+                            int min = parseTime(time.getText())[1];
                             screeningDate = setTimeForScreeningDate(date, hour, min);
                             urlForScreening = time.getAttribute("data-url");
                         } catch (Exception e) {
@@ -193,22 +204,26 @@ public class WebScraperCineworld extends WebScraper {
                         }
                         // Now we have all the details needed to add our screening in the database.
                         try {
-                            super.saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailString, urlForScreening);
+//                            super.saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailString, urlForScreening);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-            }
-            date = super.getNextDate(date, 1);
-            int nextDay = dayIndex + 1;
-            if(nextDay < 7)
-                js.executeScript("document.getElementsByClassName('qb-calendar-widget')[0].querySelectorAll('[data-automation-id]')[" + nextDay + "].click()");
-            try {
-                Thread.sleep(2000);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+//            } //todo uncomment that
+//            date = super.getNextDate(date, 1);
+//            int nextDay = dayIndex + 1;
+//            if(nextDay < 7)
+//                js.executeScript("document.getElementsByClassName('qb-calendar-widget')[0].querySelectorAll('[data-automation-id]')[" + nextDay + "].click()");
+            waitThread(2000);
+        }
+        getDescriptions(js, wait, driver);
+        try {
+            movieDAO.addDescription(titlesAndDescriptions);
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+            System.out.println("We tried to add a description to a movie that was not previously saved. " +
+                    "Check the add movie function, or how the url of that movie was added to the list of url.");
         }
 
         //Exit driver and close Chrome

@@ -35,7 +35,7 @@ public class WebScraperVueCinema extends WebScraper {
         boolean hasGrown = true;
         while (hasGrown) {
 
-            this.scrollToElement(js, top, dataloader);
+            scrollToElement(js, top, dataloader);
 
             try {
                 Thread.sleep(500);
@@ -62,7 +62,7 @@ public class WebScraperVueCinema extends WebScraper {
         for (WebElement movie : moviesList) {
             boolean loaded = true;
             do {
-                this.scrollToElement(js, top, movie);
+                scrollToElement(js, top, movie);
                 WebElement title = movie.findElement(By.className("subtitle"));
                 String loadStatus = movie.findElement(By.className("filmlist__poster")).getAttribute("data-loaded");
                 if (loadStatus == null || !loadStatus.equalsIgnoreCase("true")) {
@@ -130,7 +130,7 @@ public class WebScraperVueCinema extends WebScraper {
 
         for(int dayIndex = 0; dayIndex < 7; dayIndex++) { //maybe reduce to 6?
 
-            this.scrollDown(driver, js, top);
+            scrollDown(driver, js, top);
 
             //Output details for individual products
             List<WebElement> moviesList = driver.findElements(By.className("filmlist__inner"));
@@ -141,7 +141,7 @@ public class WebScraperVueCinema extends WebScraper {
             }
 
             // We are waiting to have the image of the last movie to be loaded to scrap
-            this.loadAllImages(moviesList, driver, js, top);
+            loadAllImages(moviesList, driver, js, top);
 
             System.out.println("________________________________VUE : NEW DAY___________________________");
             System.out.println("The date is: "  + date);
@@ -158,7 +158,10 @@ public class WebScraperVueCinema extends WebScraper {
                 //Database search for the movie id. It will be added if it's not in the db
                 try {
                     currentMovie = super.addMovie(title, description, imageUrl);
-                } catch (Exception e) {
+                } catch (NullPointerException NPE){
+                    continue;
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Problem when getting new movie from the database");
                     System.out.println("Title = " + title);
@@ -186,10 +189,10 @@ public class WebScraperVueCinema extends WebScraper {
                     String detailPerScreening;
                     String urlForScreening ;
                     try {
-                        int hour = this.parseTime(detail.getText())[0];
-                        int min = this.parseTime(detail.getText())[1];
+                        int hour = parseTime(detail.getText())[0];
+                        int min = parseTime(detail.getText())[1];
                         screeningDate = super.setTimeForScreeningDate(date, hour, min);
-                        detailPerScreening = this.parseDetails(detail.getText());
+                        detailPerScreening = parseDetails(detail.getText());
                         urlForScreening = movie.findElement(By.className("small")).getAttribute("href");
                     } catch (Exception e) {
                         continue;

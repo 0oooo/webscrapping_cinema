@@ -8,7 +8,7 @@ abstract public class AbstractDAO {
 
     protected Session getCurrentSession(){
         try {
-            Session session = this.sessionFactoryManager.getSessionFactory().getCurrentSession();
+            Session session = sessionFactoryManager.getSessionFactory().getCurrentSession();
             return session;
         } catch (Exception e) {
             e.printStackTrace();

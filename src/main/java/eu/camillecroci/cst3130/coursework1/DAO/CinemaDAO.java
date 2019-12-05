@@ -106,17 +106,27 @@ public class CinemaDAO extends AbstractDAO {
         }
     }
 
+    /**
+     *
+     * @param company
+     * @return
+     */
     public List<Cinema> getCinemasByCompanyName(String company){
         Session session = super.getCurrentSession();
+
         List<Cinema> allCinemas = new ArrayList<Cinema>();
         try {
             session.beginTransaction();
+
             allCinemas = session.createQuery("from Cinema where companyName = '" + company + "'").getResultList();
         } catch (HibernateException e) {
+
             if (session.getTransaction() != null) session.getTransaction().rollback();
+
             e.printStackTrace();
         } finally {
             session.close();
+
             return allCinemas;
         }
     }
