@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CinemaDAO extends AbstractDAO {
 
-    public void addCinema(String name, String address, String phoneNumber, String companyname) {
+    public void addCinema(String name, String address, String phoneNumber, String companyname, String cinemaUrl, boolean active) {
         Session session = super.getCurrentSession();
 
         Cinema cinema = new Cinema();
@@ -19,6 +19,8 @@ public class CinemaDAO extends AbstractDAO {
         cinema.setAddress(address);
         cinema.setPhone(phoneNumber);
         cinema.setCompanyName(companyname);
+        cinema.setCinemaNameUrl(cinemaUrl);
+        cinema.setActive(active);
 
         session.beginTransaction();
 

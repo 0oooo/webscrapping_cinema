@@ -10,6 +10,37 @@ import java.util.Set;
 
 public class MovieDAO extends AbstractDAO {
 
+    /**
+     * Deviation of the main addMovie method for testing purposes:
+     * This add movie but does not search if the movie is already in the database
+     * @param name
+     * @param description
+     * @param url
+     * @return
+     */
+    public Movie addMovieNoSearch(String name, String description, String url) {
+
+        Movie movie = new Movie();
+
+        Session session = super.getCurrentSession();
+
+        movie.setName(cleanTitle(name));
+        movie.setDescription(description);
+        movie.setUrl(url);
+
+        session.beginTransaction();
+
+        session.save(movie);
+
+        session.getTransaction().commit();
+
+        System.out.println("Movie added to database with ID" + movie.getId());
+
+        session.close();
+
+        return movie;
+    }
+
     public Movie addMovie(String name, String description, String url) {
 
         Movie searchedMovie = searchMovieByTitle(name);
@@ -38,10 +69,10 @@ public class MovieDAO extends AbstractDAO {
         return movie;
     }
 
-    private String cleanTitle(String title){
+    public String cleanTitle(String title){
         title =  title.toLowerCase()
                 .replace(" ii", " 2") // should find a way to make that more automatic
-                .replace("'", "")
+                .replace("'", "_")
                 .replace(":", "")
                 .replace("-", "")
                 .replace("  ", " ")

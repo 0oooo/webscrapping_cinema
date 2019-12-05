@@ -61,7 +61,7 @@
     <bean id="myWebscraperManager" class="eu.camillecroci.cst3130.coursework1.webscraper.WebScraperManager">
         <property name="webScrapersList">
             <list value-type="eu.camillecroci.cst3130.coursework1.webscraper.WebScraper">
-<!--                <ref bean="myVueWebScraper"></ref>-->
+                <ref bean="myVueWebScraper"></ref>
                 <ref bean="myCineworldWebScraper"></ref>
             </list>
         </property>

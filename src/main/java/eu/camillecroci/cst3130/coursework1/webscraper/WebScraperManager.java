@@ -1,5 +1,8 @@
 package eu.camillecroci.cst3130.coursework1.webscraper;
 
+import eu.camillecroci.cst3130.coursework1.Cinema;
+import eu.camillecroci.cst3130.coursework1.DAO.CinemaDAO;
+
 import java.util.List;
 
 public class WebScraperManager {
@@ -10,6 +13,7 @@ public class WebScraperManager {
         for(WebScraper ws : webScrapersList){
             ws.start();
         }
+
     }
 
     public List<WebScraper> getWebScrapersList() {

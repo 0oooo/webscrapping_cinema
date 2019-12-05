@@ -37,11 +37,7 @@ public class WebScraperVueCinema extends WebScraper {
 
             scrollToElement(js, top, dataloader);
 
-            try {
-                Thread.sleep(500);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            waitThread(500);
             scrollToElement(js, top, dataloader);
 
             newSize = tempList.size();
@@ -82,7 +78,7 @@ public class WebScraperVueCinema extends WebScraper {
         return other;
     }
 
-    private int[] parseTime(String time) {
+    public int[] parseTime(String time) { // "2:30 PM "
         int[] parsedTime = new int[2];
         char separatorTime = ':';
         char separatorMeridiem = 'M';
@@ -115,11 +111,7 @@ public class WebScraperVueCinema extends WebScraper {
 
         driver.get(vueUrl);
 
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        waitThread(2000);
 
         //Wait for page to load
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("whats-on-filters")));
@@ -212,14 +204,7 @@ public class WebScraperVueCinema extends WebScraper {
                     }
                 }
             }
-            date = super.getNextDate(date, 1);
-            int nextDay = dayIndex + 1;
-            js.executeScript("document.getElementsByName('group__filter_day')[" + nextDay + "].click()");
-            try {
-                Thread.sleep(2000);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+            goNextDay(js, dayIndex);
         }
 
         //Exit driver and close Chrome

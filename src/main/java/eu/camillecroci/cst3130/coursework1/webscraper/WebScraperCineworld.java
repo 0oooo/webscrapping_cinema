@@ -91,14 +91,6 @@ public class WebScraperCineworld extends WebScraper {
         return parsedTime;
     }
 
-    private void waitThread(int amount){
-        try {
-            Thread.sleep(amount);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     // Hack to get all the descriptions afterwards as clicking + going backwards was a pb with selenium
     // First we create a map of all the movies and their url to their description.
     // Then we create the movie with an empty description.
@@ -112,7 +104,7 @@ public class WebScraperCineworld extends WebScraper {
     }
 
     public void scrapeMovies(String location, Cinema cinema) throws IOException {
-        String cineworldUrl  = getCinemaUrl( location);
+        String cineworldUrl  = getCinemaUrl(location);
         ChromeOptions options  = new ChromeOptions();
         options.setHeadless(true);
         WebDriver driver = new ChromeDriver(options);
@@ -123,22 +115,17 @@ public class WebScraperCineworld extends WebScraper {
 
         Date date = new Date();
 
-//        for(int dayIndex = 0; dayIndex < 7; dayIndex++) {
+        for(int dayIndex = 0; dayIndex < 7; dayIndex++) {
 
             System.out.println("________________________________ CW NEW DAY___________________________");
             System.out.println("The date is: "  + date);
 
             driver.get(cineworldUrl);
 
-            try {
-                Thread.sleep(2000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            waitThread(2000);
 
             //Wait for page to load
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main-menu")));
-
 
             // Get the list of all the movies
             List<WebElement> moviesList = driver.findElements(By.className("qb-movie"));
@@ -204,18 +191,15 @@ public class WebScraperCineworld extends WebScraper {
                         }
                         // Now we have all the details needed to add our screening in the database.
                         try {
-//                            super.saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailString, urlForScreening);
+                            super.saveScreeningInDatabase(cinema, currentMovie, screeningDate, detailString, urlForScreening);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-//            } //todo uncomment that
-//            date = super.getNextDate(date, 1);
-//            int nextDay = dayIndex + 1;
-//            if(nextDay < 7)
-//                js.executeScript("document.getElementsByClassName('qb-calendar-widget')[0].querySelectorAll('[data-automation-id]')[" + nextDay + "].click()");
-            waitThread(2000);
+            }
+            goNextDay(js,dayIndex);
+            date = super.getNextDate(date, 1);
         }
         getDescriptions(js, wait, driver);
         try {

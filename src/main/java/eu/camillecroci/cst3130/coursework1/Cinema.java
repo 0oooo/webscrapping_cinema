@@ -27,6 +27,7 @@ public class Cinema {
     @Column(name="cinema_url_name")
     private String cinemaNameUrl;
 
+    @Column(name="active")
     private boolean active;
 
     public Cinema(){}

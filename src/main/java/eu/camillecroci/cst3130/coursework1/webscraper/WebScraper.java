@@ -75,6 +75,20 @@ public class WebScraper extends Thread {
         return modifiedDate;
     }
 
+    protected void waitThread(int amount){
+        try {
+            Thread.sleep(amount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void goNextDay(JavascriptExecutor js, int dayIndex){
+        int nextDay = dayIndex + 1;
+        if(nextDay < 7)
+            js.executeScript("document.getElementsByClassName('qb-calendar-widget')[0].querySelectorAll('[data-automation-id]')[" + nextDay + "].click()");
+        waitThread(2000);
+    }
 
     protected synchronized Movie addMovie(String title, String description, String imgUrl) {
         return movieDAO.addMovie(title, description, imgUrl);
